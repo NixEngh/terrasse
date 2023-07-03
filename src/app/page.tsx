@@ -1,3 +1,4 @@
+import LoginButton from "@/components/LoginButton";
 import { redirect } from "next/navigation";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
         <h3 className="text-3xl">
             Du har 2 ledige timer på terrassen i denne uken.
         </h3>
+        <LoginButton />
 
       </div>
     </main>
