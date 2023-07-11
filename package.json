@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "dbpush": "dotenv -e .env.local prisma db push"
+    "dbpush": "dotenv -e .env.local prisma db push",
+    "prismastudio": "dotenv -e .env.local prisma studio"
   },
   "dependencies": {
+    "@next-auth/prisma-adapter": "^1.0.0",
     "@prisma/client": "^4.16.1",
     "@types/node": "20.3.1",
     "@types/react": "18.2.13",
