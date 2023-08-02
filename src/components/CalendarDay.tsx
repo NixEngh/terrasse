@@ -1,3 +1,7 @@
+"use client"
+
 export default function CalendarDay () {
-    return <></>
+    return <div>
+
+    </div>
 }
