@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth/next";
+import { getAuthSession } from "@/lib/auth";
+getAuthSession
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default async function ProtectedLayout({ children }: Props) {
-  const session = await getServerSession(authOptions);
+  const session = await getAuthSession();
 
   if (!session) {
     // return redirect("/");
@@ -16,7 +16,7 @@ export default async function ProtectedLayout({ children }: Props) {
   return (
     <div className="flex flex-col h-screen">
       <Header />
-      <div className="flex-grow flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center flex-grow">
         {children}
       </div>
     </div>
