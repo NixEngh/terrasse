@@ -11,8 +11,10 @@ export default async function ProtectedLayout({ children }: Props) {
   const session = await getAuthSession();
 
   if (!session) {
-    // return redirect("/");
+    return redirect("/");
   }
+
+
   return (
     <div className="flex flex-col h-screen">
       <Header />

@@ -1,11 +1,11 @@
 const weekdays = [
+  "Søndag",
   "Mandag",
   "Tirsdag",
   "Onsdag",
   "Torsdag",
   "Fredag",
   "Lørdag",
-  "Søndag",
 ] as const;
 
 type WeekDay = (typeof weekdays)[number];
