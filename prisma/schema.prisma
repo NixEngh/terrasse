@@ -69,7 +69,7 @@ model Reservation {
 
 enum ProfileColor {
   profileRed
-  profileGreed
+  profileGreen
   profileYellow
   profileBlue
 }

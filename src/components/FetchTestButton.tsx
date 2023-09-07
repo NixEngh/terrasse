@@ -5,8 +5,8 @@ import { useState } from "react";
 
 export default function FetchTestButton() {
   const data: BookingSchema = {
-    startTime: new Date("2023-08-30T15:01"),
-    endTime: new Date("2023-08-30T17:00"),
+    startTime: new Date("2023-09-01T14:00"),
+    endTime: new Date("2023-09-02T17:00"),
   };
 
   const [result, setResult] = useState<string|null>(null)
@@ -14,7 +14,7 @@ export default function FetchTestButton() {
   const handler = async () => {
     console.log(JSON.stringify(data))
     const response = await fetch("api/bookings", {
-      method: "POST",
+      method: "POST", 
       body: JSON.stringify(data),
     });
     setResult(await response.text());
