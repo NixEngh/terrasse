@@ -2,6 +2,7 @@ import { DefaultSession, getServerSession, type NextAuthOptions } from "next-aut
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import DiscordProvider from "next-auth/providers/discord";
 import prisma from "./prisma";
+import { ProfileColor } from "@prisma/client";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
@@ -9,6 +10,7 @@ declare module "next-auth" {
   }
   interface User {
     id: string;
+    profileColor: ProfileColor;
   }
 }
 
@@ -25,6 +27,7 @@ export const authOptions: NextAuthOptions = {
     session: async ({session,user}) => {
       if (session?.user) {
         session.user.id = user.id;
+        session.user.profileColor = user.profileColor;
       }
       return session;
     }

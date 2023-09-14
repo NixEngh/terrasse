@@ -8,39 +8,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import Spinner from "./Spinner";
 import { hours, minutes } from "@/lib/times";
+import { ReservationFormSchema, reservationFormSchema } from "@/lib/schemas";
 
-const validTime = z.object({
-  hours: z.coerce
-    .number()
-    .int()
-    .gte(0, "må være gyldig tid")
-    .lt(24, "må være gyldig tid"),
-  minutes: z.coerce
-    .number()
-    .int()
-    .gte(0, "må være gyldig tid")
-    .lt(60, "må være gyldig tid"),
-});
 
-export const reservationFormSchema = z
-  .object({
-    from: validTime,
-    to: validTime,
-  })
-  .refine(
-    (data) => {
-      if (data.to.hours > data.from.hours) {
-        return true;
-      } else if (data.to.hours === data.from.hours) {
-        return data.to.minutes > data.from.minutes;
-      } else {
-        return false;
-      }
-    },
-    { message: "intervallet må være positivt", path: ["from"] }
-  );
-
-export type ReservationFormSchema = z.infer<typeof reservationFormSchema>;
 
 export default function ReservationForm({ date }: { date: Date }) {
 

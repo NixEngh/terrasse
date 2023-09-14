@@ -2,13 +2,11 @@ import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { getAuthSession } from "@/lib/auth";
 import { getReservations } from "@/lib/queries/reservations";
+import { bookingAPISchema } from "@/lib/schemas";
 
-const bookingSchema = z.object({
-  startTime: z.string().pipe(z.coerce.date()),
-  endTime: z.string().pipe(z.coerce.date()),
-});
 
-export type BookingSchema = z.infer<typeof bookingSchema>;
+
+export type BookingSchema = z.infer<typeof bookingAPISchema>;
 
 export const POST = async (req: Request) => {
   const session = await getAuthSession();
@@ -19,7 +17,7 @@ export const POST = async (req: Request) => {
     });
   }
 
-  const booking = bookingSchema.safeParse(await req.json());
+  const booking = bookingAPISchema.safeParse(await req.json());
 
   if (!booking.success) {
     return new Response(null, {

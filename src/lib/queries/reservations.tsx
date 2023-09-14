@@ -23,6 +23,7 @@ export const getReservations = async (startDate: Date, endDate: Date) => {
           profileColor: true,
           email: true,
           name: true,
+          image: true,
         }
       }
     }
