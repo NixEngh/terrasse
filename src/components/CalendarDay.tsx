@@ -30,7 +30,7 @@ export default function CalendarDay({ date, initialEvents }: Props) {
           <span className="relative text-xs text-gray-600 select-none -top-3">
             {hour}
           </span>
-          <div className="absolute inline-block h-px bg-gray-400 right-1 left-5" />
+          <div className="absolute inline-block h-px bg-gray-400 right-1 left-5 z-0" />
         </div>
       );
     }
@@ -55,8 +55,16 @@ export default function CalendarDay({ date, initialEvents }: Props) {
           </ol>
         </div>
       </div>
-      <dialog ref={modalRef} className="p-3">
-        <div className="absolute p-2 border border-transparent hover:border-slate-300 rounded-md top-3 left-3">
+      <dialog
+        ref={modalRef}
+        className="p-0 outline-none"
+        onClick={(e) => {
+          if (modalRef.current?.open) {
+            modalRef.current?.close();
+          }
+        }}
+      >
+        <div className="absolute p-2 border-none rounded-md hover:border-slate-300 top-3 left-3">
           <Cross1Icon onClick={() => modalRef.current?.close()} />
         </div>
         <ReservationForm date={date} />

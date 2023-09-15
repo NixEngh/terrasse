@@ -22,4 +22,11 @@ for (let minute = 0; minute < 60; minute = minute + 15) {
   minutes.push(minute);
 }
 
-export { hours, minutes };
+const timeToString = (time: number) => {
+  if (time < 10) {
+    return `0${time}`;
+  }
+  return `${time}`;
+}
+
+export { hours, minutes, timeToString };

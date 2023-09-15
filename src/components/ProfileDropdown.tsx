@@ -30,13 +30,13 @@ const ProfileDropdown = ({ session }: Props) => {
         </p>
       </button>
       {isOpen && (
-        <ol className="absolute p-3 bg-white border rounded-md right-8 w-60">
+        <ol className="absolute p-3 bg-white border rounded-md right-8 w-60 z-10">
           <li>
             <h4 className="text-md">Innstillinger</h4>
           </li>
           <div className="w-full h-px my-2 bg-slate-300"></div>
           <li>
-            <h5 className="text-sm font-light">
+            <h5 className="text-sm font-light mb-3">
               Farge
             </h5>
             <ColorSelector/>

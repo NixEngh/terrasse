@@ -5,16 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
 import Spinner from "./Spinner";
-import { hours, minutes } from "@/lib/times";
+import { hours, minutes, timeToString } from "@/lib/times";
 import { ReservationFormSchema, reservationFormSchema } from "@/lib/schemas";
 
-
-
 export default function ReservationForm({ date }: { date: Date }) {
-
-
   const [fetchResult, setFetchResult] = useState<{
     isError?: boolean;
     message?: string;
@@ -50,14 +45,17 @@ export default function ReservationForm({ date }: { date: Date }) {
         method: "POST",
         body: JSON.stringify(newData),
       });
+
       setFetchIsLoading(false);
 
-      if (!response.ok) throw response.statusText;
+      const res = await response.text();
+      if (!response.ok) throw res;
 
       setFetchResult({ isError: false, message: "success!" });
 
       router.refresh();
     } catch (e) {
+      console.log(e);
       setFetchResult({ isError: true, message: e as string });
       setFetchIsLoading(false);
       return null;
@@ -66,8 +64,9 @@ export default function ReservationForm({ date }: { date: Date }) {
 
   return (
     <form
+      onClick={(e) => e.stopPropagation()}
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col items-center gap-3"
+      className="flex flex-col items-center gap-3 p-3"
     >
       <h3 className="mb-3 text-center">Velg tid</h3>
       <div className="flex w-80">
@@ -79,7 +78,7 @@ export default function ReservationForm({ date }: { date: Date }) {
         >
           {hours.map((hour) => (
             <option key={hour} value={hour}>
-              {hour}
+              {timeToString(hour)}
             </option>
           ))}
         </select>
@@ -91,7 +90,7 @@ export default function ReservationForm({ date }: { date: Date }) {
         >
           {minutes.map((minute) => (
             <option key={minute} value={minute}>
-              {minute}
+              {timeToString(minute)}
             </option>
           ))}
         </select>
@@ -103,7 +102,7 @@ export default function ReservationForm({ date }: { date: Date }) {
         <select {...register("to.hours")} id="hours" className="flex-grow mx-2">
           {hours.map((hour) => (
             <option key={hour} value={hour}>
-              {hour}
+              {timeToString(hour)}
             </option>
           ))}
         </select>
@@ -115,7 +114,7 @@ export default function ReservationForm({ date }: { date: Date }) {
         >
           {minutes.map((minute) => (
             <option key={minute} value={minute}>
-              {minute}
+              {timeToString(minute)}
             </option>
           ))}
         </select>

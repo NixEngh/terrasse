@@ -50,5 +50,12 @@ const reservationFormSchema = z
 
 type ReservationFormSchema = z.infer<typeof reservationFormSchema>;
 
-export type { ReservationFormSchema, ColorSchema };
-export { bookingAPISchema, colorSchema, reservationFormSchema };
+const getBookingsSchema = z.object({
+  from: z.string().pipe(z.coerce.date()),
+  to: z.string().pipe(z.coerce.date()),
+});
+
+type GetBookingsSchema = z.infer<typeof getBookingsSchema>;
+
+export type { ReservationFormSchema, ColorSchema, GetBookingsSchema };
+export { bookingAPISchema, colorSchema, reservationFormSchema, getBookingsSchema };

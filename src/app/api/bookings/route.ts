@@ -2,7 +2,7 @@ import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { getAuthSession } from "@/lib/auth";
 import { getReservations } from "@/lib/queries/reservations";
-import { bookingAPISchema } from "@/lib/schemas";
+import { bookingAPISchema, getBookingsSchema } from "@/lib/schemas";
 
 
 
@@ -49,12 +49,6 @@ export const POST = async (req: Request) => {
   });
 };
 
-const getBookingsSchema = z.object({
-  from: z.string().pipe(z.coerce.date()),
-  to: z.string().pipe(z.coerce.date()),
-});
-
-export type GetBookingsSchema = z.infer<typeof getBookingsSchema>;
 
 export const GET = async (req: Request) => {
   const session = await getAuthSession();
