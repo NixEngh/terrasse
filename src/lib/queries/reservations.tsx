@@ -7,7 +7,7 @@ export const getReservations = async (startDate: Date, endDate: Date) => {
       AND: [
         {
           from: {
-            lte: endDate,
+            lt: endDate,
           },
         },
         {

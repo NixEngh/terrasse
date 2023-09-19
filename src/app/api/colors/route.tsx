@@ -1,6 +1,4 @@
 import { getAuthSession } from "@/lib/auth";
-import { ProfileColor } from "@prisma/client";
-import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { colorSchema } from "@/lib/schemas";
 
@@ -15,10 +13,11 @@ export const POST = async (req: Request) => {
     });
   }
 
-  const payload = colorSchema.safeParse(req.body);
+  const payload = colorSchema.safeParse(await req.json());
 
   if (!payload.success) {
-    return new Response(null, {
+    console.log(payload.error);
+    return new Response("something went wrong", {
       status: 400,
     });
   }

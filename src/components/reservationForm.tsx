@@ -2,22 +2,25 @@
 
 import { BookingSchema } from "@/app/api/bookings/route";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Spinner from "./Spinner";
 import { hours, minutes, timeToString } from "@/lib/times";
 import { ReservationFormSchema, reservationFormSchema } from "@/lib/schemas";
 
-export default function ReservationForm({ date }: { date: Date }) {
+interface Props {
+  date: Date;
+}
+
+
+
+export default function ReservationForm({ date }: Props) {
   const [fetchResult, setFetchResult] = useState<{
     isError?: boolean;
     message?: string;
   }>({});
 
   const [fetchIsLoading, setFetchIsLoading] = useState(false);
-
-  const router = useRouter();
 
   const {
     register,
@@ -47,13 +50,11 @@ export default function ReservationForm({ date }: { date: Date }) {
       });
 
       setFetchIsLoading(false);
-
       const res = await response.text();
       if (!response.ok) throw res;
-
+      
       setFetchResult({ isError: false, message: "success!" });
 
-      router.refresh();
     } catch (e) {
       console.log(e);
       setFetchResult({ isError: true, message: e as string });

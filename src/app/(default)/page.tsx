@@ -22,12 +22,6 @@ export default async function Login() {
           </h2>
           <div className="flex flex-col space-y-3">
             <DiscordButton />
-            <Link
-              href="/demo"
-              className="text-center bg-black text-white p-5 rounded-lg hover:bg-white hover:text-black transition-colors"
-            >
-              Prøv demoen
-            </Link>
           </div>
         </div>
       </div>

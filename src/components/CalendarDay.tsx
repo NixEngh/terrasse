@@ -2,40 +2,44 @@
 
 import { reservationWithUserData } from "@/lib/queries/reservations";
 import { weekdays } from "@/lib/times";
-import { useRef } from "react";
-import ReservationForm from "./reservationForm";
-import CalendarEvent from "./CalendarEvent";
 import { Cross1Icon } from "@radix-ui/react-icons";
+import { useRef } from "react";
+import CalendarEvent from "./CalendarEvent";
+import ReservationForm from "./reservationForm";
+
+
 interface Props {
   date: Date;
   initialEvents: reservationWithUserData[];
 }
+
+
+const renderHourMarks = () => {
+  const hourMarks = [];
+  for (let hour = 0; hour < 25; hour++) {
+    hourMarks.push(
+      <div
+        className="absolute w-full "
+        style={{
+          top: `${(hour * 100) / 24}%`,
+        }}
+        key={hour}
+      >
+        <span className="relative text-xs text-gray-600 select-none -top-3">
+          {hour}
+        </span>
+        <div className="absolute inline-block h-px bg-gray-400 right-1 left-5 z-0" />
+      </div>
+    );
+  }
+  return hourMarks;
+};
 
 export default function CalendarDay({ date, initialEvents }: Props) {
   const modalRef = useRef<HTMLDialogElement>(null);
 
   const weekday = date.getDay();
 
-  const renderHourMarks = () => {
-    const hourMarks = [];
-    for (let hour = 0; hour < 25; hour++) {
-      hourMarks.push(
-        <div
-          className="absolute w-full "
-          style={{
-            top: `${(hour * 100) / 24}%`,
-          }}
-          key={hour}
-        >
-          <span className="relative text-xs text-gray-600 select-none -top-3">
-            {hour}
-          </span>
-          <div className="absolute inline-block h-px bg-gray-400 right-1 left-5 z-0" />
-        </div>
-      );
-    }
-    return hourMarks;
-  };
 
   return (
     <>
@@ -64,10 +68,10 @@ export default function CalendarDay({ date, initialEvents }: Props) {
           }
         }}
       >
-        <div className="absolute p-2 border-none rounded-md hover:border-slate-300 top-3 left-3">
+        <div className="absolute p-2 border-none rounded-md hover:border-black top-3 left-3">
           <Cross1Icon onClick={() => modalRef.current?.close()} />
         </div>
-        <ReservationForm date={date} />
+        <ReservationForm date={date}/>
       </dialog>
     </>
   );

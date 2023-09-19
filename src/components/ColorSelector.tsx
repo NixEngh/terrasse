@@ -5,45 +5,93 @@ import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProfileColor } from "@prisma/client";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 import { SubmitHandler, UseFormRegister, useForm } from "react-hook-form";
+import Spinner from "./Spinner";
+import { colors, colorsToFarger } from "@/lib/colors";
 
 const ColorSelector = () => {
   const { data: session, status } = useSession();
+  
 
+  const [loading, setLoading] = useState(false);
+  const [fetchResult, setFetchResult] = useState<{
+    isError?: boolean;
+    message?: string;
+  }>({});
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<ColorSchema>({
+    defaultValues: {
+      color: session?.user.profileColor,
+    },
     resolver: zodResolver(colorSchema),
   });
 
-  const colors = [
-    ProfileColor.profileBlue,
-    ProfileColor.profileGreen,
-    ProfileColor.profileRed,
-    ProfileColor.profileYellow,
-  ];
+  const onSubmit: SubmitHandler<ColorSchema> = async (data) => {
+    setLoading(true);
+    try {
+      const response = await fetch("api/colors", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      setLoading(false);
+      const res = await response.text();
+      if (!response.ok) throw res;
 
-  const onSubmit: SubmitHandler<ColorSchema> = async (data) => {};
+      setFetchResult({
+        isError: false,
+        message: `Byttet farge til ${colorsToFarger[data.color]}!`,
+      });
+    } catch (e) {
+      console.log(e);
+      setFetchResult({ isError: true, message: e as string });
+    }
+  };
 
   return status === "loading" ? (
-    <></>
+    <div role="status" className="animate-pulse">
+      <div className="flex items-center justify-center mt-4 gap">
+        <div className="w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-700"></div>
+        <div className="w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-700"></div>
+        <div className="w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-700"></div>
+        <div className="w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-700"></div>
+
+      </div>
+      <span className="sr-only">Loading...</span>
+    </div>
   ) : (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-2">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col items-center gap-2"
+    >
       <ol className="flex justify-center gap-3">
         {colors.map((color: ProfileColor) => (
           <li key={color}>
-            <ColorRadioButton color={color} register={register} />
+            <ColorRadioButton color={color} register={register}/>
           </li>
         ))}
       </ol>
-      <button
-        className="w-1/5 py-1 text-center text-white border rounded-lg select-none bg-slate-600 hover:bg-slate-500"
-        type="submit"
+
+      {loading ? (
+        <Spinner />
+      ) : (
+        <button
+          className="w-1/5 py-1 text-center text-white border rounded-lg select-none bg-slate-600 hover:bg-slate-500"
+          type="submit"
+        >
+          velg
+        </button>
+      )}
+      <p
+        className={cn("text-green-500", {
+          "text-red-500": fetchResult.isError,
+        })}
       >
-        velg
-      </button>
+        {fetchResult.message}
+      </p>
     </form>
   );
 };
@@ -57,12 +105,11 @@ const ColorRadioButton = ({ color, register }: ColorRadioButtonProps) => {
   return (
     <>
       <input
-        className="peer hidden"
+        className="hidden peer"
         {...register("color")}
         type="radio"
         id={color}
         value={color}
-        checked
       />
       <label htmlFor={color} className="group peer-checked:text-red-400">
         <div

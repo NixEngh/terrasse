@@ -3,7 +3,7 @@
 import { reservationWithUserData } from "@/lib/queries/reservations";
 import { timeToString } from "@/lib/times";
 import { cn } from "@/lib/utils";
-import { Key, useRef } from "react";
+import { useRef } from "react";
 
 interface Props {
   event: reservationWithUserData;
@@ -75,6 +75,7 @@ const CalendarEvent = ({ event }: Props) => {
           <img className={cn("w-20 h-20 rounded-full border-4 select-none", `border-${event.User.profileColor}-primary`)} src={event.User.image??undefined} />
           <h3 className="text-2xl">{event.User.name}</h3>
           <div className="h-px w-4/5 bg-slate-400"/>
+          <p>{event.from.getDate()}{event.to.getDate()===event.from.getDate()?"":`/${event.to.getDate()}`}</p>
           <p>Booket fra kl {timeStrings.from} til {timeStrings.to}</p>
         </div>
       </dialog>
