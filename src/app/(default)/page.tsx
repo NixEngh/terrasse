@@ -1,6 +1,5 @@
 import DiscordButton from "@/components/DiscordButton";
 import { getAuthSession } from "@/lib/auth";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Login() {
