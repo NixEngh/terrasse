@@ -7,12 +7,23 @@ import { useRef } from "react";
 
 interface Props {
   event: reservationWithUserData;
+  dateToRender: Date;
 }
 
-const CalendarEvent = ({ event }: Props) => {
+const CalendarEvent = ({ event, dateToRender}: Props) => {
   const modalRef = useRef<HTMLDialogElement>(null);
 
   const getAbsolutePosition = (time: Date): string => {
+
+    // If the time is before the date to render, return 0%
+    if (time.getDate() < dateToRender.getDate()) {
+      return "0%";
+    }
+
+    // If the time is after the date to render, return 100%
+    if (time.getDate() > dateToRender.getDate()) {
+      return "100%";
+    }
     const [hours, minutes] = [time.getHours(), time.getMinutes()];
     return `${((hours * 60 + minutes) * 100) / (24 * 60)}%`;
   };
@@ -75,7 +86,7 @@ const CalendarEvent = ({ event }: Props) => {
           <img className={cn("w-20 h-20 rounded-full border-4 select-none", `border-${event.User.profileColor}-primary`)} src={event.User.image??undefined} />
           <h3 className="text-2xl">{event.User.name}</h3>
           <div className="h-px w-4/5 bg-slate-400"/>
-          <p>{event.from.getDate()}{event.to.getDate()===event.from.getDate()?"":`/${event.to.getDate()}`}</p>
+          <p className="text-lg">{event.from.getDate()}{event.to.getDate()===event.from.getDate()?"":`. - ${event.to.getDate()}`}.</p>
           <p>Booket fra kl {timeStrings.from} til {timeStrings.to}</p>
         </div>
       </dialog>
