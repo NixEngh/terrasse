@@ -47,7 +47,8 @@ export default function CalendarDay({ date, initialEvents }: Props) {
         className="flex flex-col items-center justify-center w-32 h-32 p-2 overflow-hidden transition-colors bg-white border border-gray md:border-white md:justify-start md:flex-grow md:h-full rounded-2xl hover:border-sky-700"
         onClick={() => modalRef.current?.showModal()}
       >
-        <span>{weekdays[weekday].slice(0, 3)}</span>
+        <p className="text-lg font-bold">{weekdays[weekday].slice(0, 3)}</p>
+        <p className="text-md font-light">{date.getDate()}.</p>
         <div className="relative hidden w-full h-full my-3 md:block">
           {renderHourMarks()}
           <ol>
