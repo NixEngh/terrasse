@@ -38,7 +38,10 @@ const CalendarEvent = ({ event, dateToRender}: Props) => {
       <div
         className={cn(
           "absolute flex flex-col items-center justify-center w-3/4 p-2 text-center text-white break-words rounded-md right-1",
-          `bg-${event.User.profileColor}-primary`
+          `bg-${event.User.profileColor}-primary`,
+          {
+            "hidden": getAbsolutePosition(event.from) === "100%" || getAbsolutePosition(event.to) === "0%",
+          }
         )}
         style={{
           top: getAbsolutePosition(event.from),
