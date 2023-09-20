@@ -54,7 +54,7 @@ export default function CalendarDay({ date, initialEvents }: Props) {
           <ol>
             {initialEvents.map((event, index) => (
               <li key={index}>
-                <CalendarEvent event={event} />
+                <CalendarEvent event={event} dateToRender={date} />
               </li>
             ))}
           </ol>
