@@ -10,16 +10,17 @@ interface Props {
   dateToRender: Date;
 }
 
-const CalendarEvent = ({ event, dateToRender}: Props) => {
+const CalendarEvent = ({ event, dateToRender }: Props) => {
   const modalRef = useRef<HTMLDialogElement>(null);
 
-  const getAbsolutePosition = (time: Date): string => {
+  const startsBefore = event.from.getDate() < dateToRender.getDate();
+  const endsAfter = event.to.getDate() > dateToRender.getDate();
 
+  const getAbsolutePosition = (time: Date): string => {
     // If the time is before the date to render, return 0%
     if (time.getDate() < dateToRender.getDate()) {
       return "0%";
     }
-
     // If the time is after the date to render, return 100%
     if (time.getDate() > dateToRender.getDate()) {
       return "100%";
@@ -37,10 +38,14 @@ const CalendarEvent = ({ event, dateToRender}: Props) => {
     <>
       <div
         className={cn(
-          "absolute flex flex-col items-center justify-center w-3/4 p-2 text-center text-white break-words rounded-md right-1",
+          "absolute hidden flex-col items-center justify-center w-10/12 p-2 text-center text-white break-words rounded-md left-0 right-0 mx-auto",
           `bg-${event.User.profileColor}-primary`,
           {
-            "hidden": getAbsolutePosition(event.from) === "100%" || getAbsolutePosition(event.to) === "0%",
+            flex:
+              getAbsolutePosition(event.from) !== "100%" &&
+              getAbsolutePosition(event.to) !== "0%",
+            "rounded-t-none": startsBefore,
+            "rounded-b-none": endsAfter,
           }
         )}
         style={{
@@ -68,9 +73,11 @@ const CalendarEvent = ({ event, dateToRender}: Props) => {
         ) : (
           <p className="">{event.User.name?.charAt(0).toUpperCase()}</p>
         )}
-        <p className="absolute bottom-0 px-2 text-sm font-light bg-black rounded-md translate-y-2/3">
-          {timeStrings.from} - {timeStrings.to}
-        </p>
+        {!endsAfter && (
+          <p className="absolute bottom-0 px-2 text-sm font-light bg-black rounded-md translate-y-2/3">
+            {timeStrings.from} - {timeStrings.to}
+          </p>
+        )}
       </div>
       <dialog
         ref={modalRef}
@@ -86,11 +93,25 @@ const CalendarEvent = ({ event, dateToRender}: Props) => {
           onClick={(e) => e.stopPropagation()}
           className="w-80 h-80 flex flex-col justify-center items-center bg-slate-700 text-white gap-3"
         >
-          <img className={cn("w-20 h-20 rounded-full border-4 select-none", `border-${event.User.profileColor}-primary`)} src={event.User.image??undefined} />
+          <img
+            className={cn(
+              "w-20 h-20 rounded-full border-4 select-none",
+              `border-${event.User.profileColor}-primary`
+            )}
+            src={event.User.image ?? undefined}
+          />
           <h3 className="text-2xl">{event.User.name}</h3>
-          <div className="h-px w-4/5 bg-slate-400"/>
-          <p className="text-lg">{event.from.getDate()}{event.to.getDate()===event.from.getDate()?"":`. - ${event.to.getDate()}`}.</p>
-          <p>Booket fra kl {timeStrings.from} til {timeStrings.to}</p>
+          <div className="h-px w-4/5 bg-slate-400" />
+          <p className="text-lg">
+            {event.from.getDate()}
+            {event.to.getDate() === event.from.getDate()
+              ? ""
+              : `. - ${event.to.getDate()}`}
+            .
+          </p>
+          <p>
+            Booket fra kl {timeStrings.from} til {timeStrings.to}
+          </p>
         </div>
       </dialog>
     </>

@@ -12,8 +12,6 @@ interface Props {
   date: Date;
 }
 
-
-
 export default function ReservationForm({ date }: Props) {
   const [fetchResult, setFetchResult] = useState<{
     isError?: boolean;
@@ -52,9 +50,8 @@ export default function ReservationForm({ date }: Props) {
       setFetchIsLoading(false);
       const res = await response.text();
       if (!response.ok) throw res;
-      
-      setFetchResult({ isError: false, message: "success!" });
 
+      setFetchResult({ isError: false, message: "success!" });
     } catch (e) {
       console.log(e);
       setFetchResult({ isError: true, message: e as string });
@@ -74,7 +71,7 @@ export default function ReservationForm({ date }: Props) {
         <p className="w-14">Fra kl:</p>
         <select
           {...register("from.hours")}
-          id="hours"
+          id="hoursfrom"
           className="flex-grow mx-2"
         >
           {hours.map((hour) => (
@@ -86,7 +83,7 @@ export default function ReservationForm({ date }: Props) {
         :
         <select
           {...register("from.minutes")}
-          id="minutes"
+          id="minutesfrom"
           className="flex-grow mx-2"
         >
           {minutes.map((minute) => (
@@ -100,7 +97,11 @@ export default function ReservationForm({ date }: Props) {
       <p className="text-red-600">{errors.from?.minutes?.message}</p>
       <div className="flex w-80">
         <p className="w-14">Til kl:</p>
-        <select {...register("to.hours")} id="hours" className="flex-grow mx-2">
+        <select
+          {...register("to.hours")}
+          id="hoursto"
+          className="flex-grow mx-2"
+        >
           {hours.map((hour) => (
             <option key={hour} value={hour}>
               {timeToString(hour)}
@@ -110,7 +111,7 @@ export default function ReservationForm({ date }: Props) {
         :
         <select
           {...register("to.minutes")}
-          id="minutes"
+          id="minutesto"
           className="flex-grow mx-2"
         >
           {minutes.map((minute) => (
