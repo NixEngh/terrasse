@@ -38,7 +38,7 @@ const CalendarEvent = ({ event, dateToRender }: Props) => {
     <>
       <div
         className={cn(
-          "absolute hidden flex-col items-center justify-center w-10/12 p-2 text-center text-white break-words rounded-md left-0 right-0 mx-auto",
+          "absolute flex-col items-center justify-center w-10/12 p-2 text-center text-white break-words rounded-md left-0 right-0 mx-auto group",
           `bg-${event.User.profileColor}-primary`,
           {
             flex:
@@ -60,13 +60,13 @@ const CalendarEvent = ({ event, dateToRender }: Props) => {
         }}
       >
         {event.User.image ? (
-          <div>
+          <div className="absolute top-0 bottom-0 flex flex-col flex-wrap items-center justify-center gap-1">
             <img
               className="w-6 h-6 rounded-full "
               src={event.User.image}
               alt="avatar"
             />
-            <p className="absolute left-0 right-0 mx-auto">
+            <p className="">
               {event.User.name?.charAt(0).toUpperCase()}
             </p>
           </div>
@@ -74,14 +74,14 @@ const CalendarEvent = ({ event, dateToRender }: Props) => {
           <p className="">{event.User.name?.charAt(0).toUpperCase()}</p>
         )}
         {!endsAfter && (
-          <p className="absolute bottom-0 px-2 text-sm font-light bg-black rounded-md translate-y-2/3">
+          <p className="absolute bottom-0 visible hidden px-2 text-sm font-light bg-black rounded-md translate-y-2/3 group-hover:block">
             {timeStrings.from} - {timeStrings.to}
           </p>
         )}
       </div>
       <dialog
         ref={modalRef}
-        className="p-0 outline-none rounded-md"
+        className="p-0 rounded-md outline-none"
         onClick={(e) => {
           e.stopPropagation();
           if (modalRef.current?.open) {
@@ -91,7 +91,7 @@ const CalendarEvent = ({ event, dateToRender }: Props) => {
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className="w-80 h-80 flex flex-col justify-center items-center bg-slate-700 text-white gap-3"
+          className="flex flex-col items-center justify-center gap-3 text-white w-80 h-80 bg-slate-700"
         >
           <img
             className={cn(
@@ -101,7 +101,7 @@ const CalendarEvent = ({ event, dateToRender }: Props) => {
             src={event.User.image ?? undefined}
           />
           <h3 className="text-2xl">{event.User.name}</h3>
-          <div className="h-px w-4/5 bg-slate-400" />
+          <div className="w-4/5 h-px bg-slate-400" />
           <p className="text-lg">
             {event.from.getDate()}
             {event.to.getDate() === event.from.getDate()
