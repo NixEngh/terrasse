@@ -3,7 +3,7 @@ A booking calendar that let's you book/schedule the only bench with sunshine on 
 Hosted at: https://terrasse-chi.vercel.app/
 #### Made with:
 - next.js 13, app-directory
-- tailwind css
+- tailwind CSS
 - auth.js with discord provider
 - prisma ORM
 - zod for schema validation
