@@ -8,4 +8,4 @@ Hosted at: https://terrasse-chi.vercel.app/
 - prisma ORM
 - zod for schema validation
 
-![image](https://github.com/NixEngh/terrasse/assets/12300712/1ef235cb-28fc-47d1-9e7d-9cbeb899f2d0)
+![image](https://github.com/NixEngh/terrasse/assets/12300712/ad51fdfe-7288-466a-8af0-fbdc0f7d390e)
