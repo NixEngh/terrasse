@@ -49,7 +49,7 @@ export default function CalendarContainer({ startDate, numberOfDays }: Props) {
     <div className="relative flex flex-col w-full h-full">
       <div className="hidden mb-3 ml-5 md:flex">
         {dates.map((date) => (
-          <div className="flex flex-col items-center flex-grow">
+          <div key={date.toLocaleString()}className="flex flex-col items-center flex-grow">
             <p className="text-xl text-sky-700">
               {date.getDate()}.
             </p>
