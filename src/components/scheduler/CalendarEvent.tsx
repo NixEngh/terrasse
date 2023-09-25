@@ -38,12 +38,9 @@ const CalendarEvent = ({ event, dateToRender }: Props) => {
     <>
       <div
         className={cn(
-          "absolute flex-col items-center justify-center w-10/12 p-2 text-center text-white break-words rounded-md left-0 right-0 mx-auto group",
+          "absolute flex flex-col items-center justify-center w-10/12 p-2 text-center text-white break-words rounded-md left-0 right-0 mx-auto group",
           `bg-${event.User.profileColor}-primary`,
           {
-            flex:
-              getAbsolutePosition(event.from) !== "100%" &&
-              getAbsolutePosition(event.to) !== "0%",
             "rounded-t-none": startsBefore,
             "rounded-b-none": endsAfter,
           }
