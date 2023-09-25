@@ -1,6 +1,6 @@
 ## Booking system for my old patio
 A booking calendar that let's you book/schedule the only bench with sunshine on my old patio. Initially created as a joke and for learning purposes. <br>
-Hosted at: https://terrasse-chi.vercel.app/
+Hosted at: https://terrasse83.vercel.app/
 #### Made with:
 - next.js 13, app-directory
 - tailwind CSS
