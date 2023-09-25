@@ -33,17 +33,17 @@ export const getReservations = async (startDate: Date, endDate: Date) => {
 export type reservationWithUserData = Prisma.PromiseReturnType<typeof getReservations>[number];
 
 
-export const getDayReservations = async (date: Date) => {
+export const getDayReservationsSupersetUTC = async (date: Date) => {
   const startDate = new Date(
     date.getFullYear(),
     date.getMonth(),
-    date.getDate()
+    date.getDate()-1
   );
 
   const endDate = new Date(
     date.getFullYear(),
     date.getMonth(),
-    date.getDate() + 1
+    date.getDate() + 2
   );
 
   return await getReservations(startDate, endDate);

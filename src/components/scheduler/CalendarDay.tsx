@@ -22,6 +22,10 @@ export default function CalendarDay({
   const modalRef = useRef<HTMLDialogElement>(null);
 
   const weekday = date.getDay();
+  const startOfDay = new Date(date);
+  startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date(date);
+  endOfDay.setHours(23, 59, 59, 999);
 
   return (
     <>
@@ -44,11 +48,20 @@ export default function CalendarDay({
 
         <div className="relative hidden w-full h-full md:block">
           <ol>
-            {initialEvents.map((event, index) => (
-              <li key={index}>
-                <CalendarEvent event={event} dateToRender={date} />
-              </li>
-            ))}
+            {initialEvents.map((event, index) => {
+              // Filter out events that are not on this day (due to timezone differences)
+              if (
+                event.to < startOfDay ||
+                event.from > endOfDay
+              ) {
+                return null;
+              }
+              return (
+                <li key={index}>
+                  <CalendarEvent event={event} dateToRender={date} />
+                </li>
+              );
+            })}
           </ol>
         </div>
       </div>

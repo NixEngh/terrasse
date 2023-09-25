@@ -1,4 +1,4 @@
-import { getDayReservations } from "@/lib/queries/reservations";
+import { getDayReservationsSupersetUTC } from "@/lib/queries/reservations";
 import { timeToString, weekdays } from "@/lib/times";
 import CalendarDay from "./CalendarDay";
 
@@ -67,7 +67,7 @@ export default function CalendarContainer({ startDate, numberOfDays }: Props) {
               <CalendarDay
                 date={date}
                 key={date.toISOString()}
-                initialEvents={await getDayReservations(date)}
+                initialEvents={await getDayReservationsSupersetUTC(date)}
                 startOrEnd={
                   index === 0
                     ? "start"
