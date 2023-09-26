@@ -1,7 +1,5 @@
 import Header from "@/components/Header";
 import { getAuthSession } from "@/lib/auth";
-getAuthSession
-import { redirect } from "next/navigation";
 
 type Props = {
   children: React.ReactNode;
@@ -9,10 +7,6 @@ type Props = {
 
 export default async function ProtectedLayout({ children }: Props) {
   const session = await getAuthSession();
-
-  if (!session) {
-    return redirect("/");
-  }
 
 
   return (
