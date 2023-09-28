@@ -15,7 +15,7 @@ export default async function Header() {
         TERRASSE83
       </Link>
 
-      {session ? <ProfileDropdown session={session} /> : <DiscordButton className="h-10"/>}
+      {session ? <ProfileDropdown session={session} /> : <DiscordButton className="text-justify py-2"/>}
     </header>
   );
 }
