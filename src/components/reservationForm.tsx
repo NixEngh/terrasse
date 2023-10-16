@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Spinner from "./Spinner";
 import { hours, minutes, timeToString } from "@/lib/times";
 import { ReservationFormSchema, reservationFormSchema } from "@/lib/schemas";
+import { useRouter } from "next/navigation";
 
 interface Props {
   date: Date;
@@ -19,6 +20,7 @@ export default function ReservationForm({ date }: Props) {
   }>({});
 
   const [fetchIsLoading, setFetchIsLoading] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -47,7 +49,6 @@ export default function ReservationForm({ date }: Props) {
         body: JSON.stringify(newData),
       });
 
-      setFetchIsLoading(false);
       const res = await response.text();
       if (!response.ok) throw res;
 
@@ -55,9 +56,11 @@ export default function ReservationForm({ date }: Props) {
     } catch (e) {
       console.log(e);
       setFetchResult({ isError: true, message: e as string });
+    } finally {
       setFetchIsLoading(false);
-      return null;
+      router.refresh();
     }
+
   };
 
   return (

@@ -30,7 +30,6 @@ export const POST = async (req: Request) => {
     booking.data.endTime
   );
   
-  console.log(reservations);
   if (reservations.length) {
     return new Response("Denne tiden er ikke tilgjengelig", {
       status: 400,
