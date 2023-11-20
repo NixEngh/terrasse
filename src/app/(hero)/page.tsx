@@ -65,7 +65,7 @@ export default async function Hero() {
               className="p-2 transition-colors border-2 border-transparent rounded-xl hover:border-black w-14 h-14"
             />
           </Link>
-          <Link href="www.linkedin.com/in/nikolaus-engh-3385571ba">
+          <Link href="https://www.linkedin.com/in/nikolaus-engh-3385571ba">
             <img
               alt="LinkedIn logo"
               src="/iconmonstr-linkedin-3.svg"
